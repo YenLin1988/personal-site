@@ -19,12 +19,52 @@ import HeaderLink from './HeaderLink.astro';
 			<HeaderLink href="/about">關於</HeaderLink>
 		</div>
 
-		<div class="hidden items-center gap-3 sm:flex">
+		<div class="flex items-center gap-3">
+			<button
+				type="button"
+				data-theme-toggle
+				class="text-stone transition-colors hover:text-ink"
+				aria-label="切換深色／淺色模式"
+				title="切換深色／淺色模式"
+			>
+				<!-- 太陽（淺色顯示，深色隱藏） -->
+				<svg
+					viewBox="0 0 24 24"
+					width="20"
+					height="20"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+					class="dark:hidden"
+				>
+					<circle cx="12" cy="12" r="4"></circle>
+					<path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+				</svg>
+				<!-- 月亮（深色顯示） -->
+				<svg
+					viewBox="0 0 24 24"
+					width="20"
+					height="20"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					aria-hidden="true"
+					class="hidden dark:block"
+				>
+					<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+				</svg>
+			</button>
+
 			<a
 				href={SOCIAL_LINKS.github}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="text-stone transition-colors hover:text-ink"
+				class="hidden text-stone transition-colors hover:text-ink sm:inline-block"
 				aria-label="GitHub"
 			>
 				<svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
@@ -36,7 +76,7 @@ import HeaderLink from './HeaderLink.astro';
 			</a>
 			<a
 				href="/rss.xml"
-				class="text-stone transition-colors hover:text-ink"
+				class="hidden text-stone transition-colors hover:text-ink sm:inline-block"
 				aria-label="RSS"
 			>
 				<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">

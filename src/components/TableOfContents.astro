@@ -1,0 +1,41 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+	headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+
+// 只顯示 h2 與 h3
+const items = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+
+{
+	items.length > 0 && (
+		<aside class="toc not-prose">
+			<details open class="lg:open:contents">
+				<summary class="font-display cursor-pointer list-none text-sm font-bold tracking-wider text-stone uppercase lg:hidden">
+					目錄
+				</summary>
+				<p class="font-display hidden text-xs font-medium tracking-[0.25em] text-stone uppercase lg:block">
+					目錄
+				</p>
+				<nav class="mt-3 border-l border-sand lg:mt-4">
+					<ol class="space-y-1.5 text-sm">
+						{items.map((h) => (
+							<li class={h.depth === 3 ? 'ml-3' : ''}>
+								<a
+									href={`#${h.slug}`}
+									class="block border-l-2 border-transparent pl-3 text-mocha transition-colors hover:border-clay hover:text-ink"
+								>
+									{h.text}
+								</a>
+							</li>
+						))}
+					</ol>
+				</nav>
+			</details>
+		</aside>
+	)
+}

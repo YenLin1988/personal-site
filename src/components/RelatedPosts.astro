@@ -1,0 +1,37 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+	posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+{
+	posts.length > 0 && (
+		<section class="mx-auto mt-16 max-w-3xl border-t border-sand px-4 pt-12">
+			<p class="font-display text-xs font-medium tracking-[0.25em] text-stone uppercase">
+				你可能也想看
+			</p>
+			<ul class="mt-6 grid gap-6 sm:grid-cols-3">
+				{posts.map((post) => (
+					<li>
+						<a href={`/blog/${post.id}/`} class="group block">
+							<p class="text-xs text-stone">
+								<FormattedDate date={post.data.pubDate} />
+							</p>
+							<h3 class="font-display mt-1 text-lg leading-snug font-semibold text-ink group-hover:text-[color:var(--color-accent)]">
+								{post.data.title}
+							</h3>
+							<p class="mt-2 line-clamp-2 text-sm text-mocha">
+								{post.data.description}
+							</p>
+						</a>
+					</li>
+				))}
+			</ul>
+		</section>
+	)
+}

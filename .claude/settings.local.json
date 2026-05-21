@@ -27,7 +27,13 @@
       "Bash(brew list *)",
       "Bash(gh repo *)",
       "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); print\\('Total repos:', len\\(data\\)\\); print\\('personal-site exists:', any\\(r['name']=='personal-site' for r in data\\)\\)\")",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(gh api *)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\('has_discussions:', d.get\\('has_discussions'\\)\\)\")",
+      "Bash(git push *)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:4321__TRACKED_VAR__)",
+      "Bash(curl -s http://localhost:4321/blog/first-post)",
+      "Bash(curl -s http://localhost:4321/blog/markdown-style-guide)"
     ]
   }
 }

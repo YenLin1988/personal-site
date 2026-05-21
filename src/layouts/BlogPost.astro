@@ -1,17 +1,25 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import type { MarkdownHeading } from 'astro';
 import Base from './Base.astro';
 import Comments from '../components/Comments.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import Newsletter from '../components/Newsletter.astro';
+import TableOfContents from '../components/TableOfContents.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & {
+	headings?: MarkdownHeading[];
+	readingMinutes?: number;
+	slug?: string;
+};
 
-const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags, headings, readingMinutes } =
+	Astro.props;
 ---
 
 <Base title={title} description={description} image={heroImage}>
-	<article class="mx-auto max-w-3xl px-4 py-12">
+	<article class="mx-auto max-w-6xl px-4 py-12">
 		{
 			heroImage && (
 				<Image
@@ -19,13 +27,16 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
 					height={510}
 					src={heroImage}
 					alt=""
-					class="mb-8 w-full rounded-xl shadow-md"
+					class="mx-auto mb-8 w-full max-w-4xl rounded-xl shadow-md"
 				/>
 			)
 		}
-		<header class="mb-8 text-center">
+
+		<header class="mx-auto mb-8 max-w-3xl text-center">
 			<p class="text-sm text-stone">
 				<FormattedDate date={pubDate} />
+				{readingMinutes && <span class="mx-2">·</span>}
+				{readingMinutes && <span>閱讀約 {readingMinutes} 分鐘</span>}
 				{
 					updatedDate && (
 						<span class="ml-2 italic">
@@ -39,17 +50,40 @@ const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.prop
 				tags && tags.length > 0 && (
 					<ul class="mt-4 flex flex-wrap justify-center gap-2">
 						{tags.map((tag) => (
-							<li class="rounded-full bg-sand px-3 py-1 text-xs text-mocha">
-								#{tag}
+							<li>
+								<a
+									href={`/tags/${tag}/`}
+									class="rounded-full bg-sand px-3 py-1 text-xs text-mocha transition-colors hover:bg-clay hover:text-paper"
+								>
+									#{tag}
+								</a>
 							</li>
 						))}
 					</ul>
 				)
 			}
 		</header>
-		<div class="prose prose-slate mx-auto max-w-none prose-a:text-[color:var(--color-accent)]">
-			<slot />
+
+		<div class="lg:grid lg:grid-cols-[1fr_15rem] lg:gap-12">
+			<div class="prose prose-lg mx-auto max-w-3xl lg:mx-0">
+				<slot />
+			</div>
+
+			{
+				headings && headings.length > 0 && (
+					<div class="mt-12 lg:mt-0">
+						<div class="lg:sticky lg:top-20">
+							<TableOfContents headings={headings} />
+						</div>
+					</div>
+				)
+			}
 		</div>
 	</article>
+
+	<slot name="related" />
+
+	<Newsletter />
+
 	<Comments />
 </Base>

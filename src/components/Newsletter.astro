@@ -1,0 +1,55 @@
+---
+import { NEWSLETTER } from '../consts';
+
+const configured = NEWSLETTER.buttondownUsername !== '';
+const actionUrl = configured
+	? `https://buttondown.com/api/emails/embed-subscribe/${NEWSLETTER.buttondownUsername}`
+	: '';
+const popupUrl = configured ? `https://buttondown.com/${NEWSLETTER.buttondownUsername}` : '';
+---
+
+<section class="mx-auto mt-16 max-w-3xl border-y border-sand bg-cream/60 px-4 py-12">
+	<div class="text-center">
+		<p class="font-display text-xs font-medium tracking-[0.25em] text-stone uppercase">
+			Newsletter
+		</p>
+		<h2 class="font-display mt-2 text-2xl font-bold text-ink sm:text-3xl">
+			不定期寄信給你
+		</h2>
+		<p class="mx-auto mt-3 max-w-md text-sm text-mocha">
+			有新文章時通知一聲。不會發垃圾信，不會賣你的 email，隨時可以取消。
+		</p>
+	</div>
+
+	{
+		configured ? (
+			<form
+				action={actionUrl}
+				method="post"
+				target="popupwindow"
+				onsubmit={`window.open('${popupUrl}', 'popupwindow')`}
+				class="mx-auto mt-6 flex max-w-md flex-col gap-2 sm:flex-row"
+			>
+				<input
+					type="email"
+					name="email"
+					required
+					placeholder="your@email.com"
+					class="flex-1 rounded-lg border border-sand bg-paper px-4 py-2.5 text-ink placeholder:text-stone focus:border-clay focus:outline-none"
+				/>
+				<button
+					type="submit"
+					class="rounded-lg bg-clay px-5 py-2.5 text-sm font-medium text-paper transition-opacity hover:opacity-90"
+				>
+					訂閱
+				</button>
+			</form>
+		) : (
+			<div class="mx-auto mt-6 max-w-md rounded-lg border border-dashed border-sand p-4 text-center text-sm text-mocha">
+				電子報尚未啟用。請依照
+				<code class="rounded bg-sand px-1.5 py-0.5 text-ink">src/consts.ts</code>
+				的說明設定 Buttondown。
+			</div>
+		)
+	}
+</section>

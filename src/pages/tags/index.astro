@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { SITE_TITLE } from '../../consts';
+
+const posts = await getCollection('blog');
+const tagCounts = new Map<string, number>();
+for (const post of posts) {
+	for (const tag of post.data.tags ?? []) {
+		tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+	}
+}
+const tags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
+const maxCount = tags[0]?.[1] ?? 1;
+---
+
+<Base title={`標籤 · ${SITE_TITLE}`} description="依標籤瀏覽所有文章。">
+	<section class="mx-auto max-w-3xl px-4 py-16">
+		<header class="mb-10">
+			<h1 class="text-4xl font-bold text-ink">標籤</h1>
+			<p class="mt-2 text-mocha">共 {tags.length} 個標籤，{posts.length} 篇文章。</p>
+		</header>
+
+		{
+			tags.length === 0 ? (
+				<p class="text-mocha">還沒有任何標籤。</p>
+			) : (
+				<ul class="flex flex-wrap gap-3">
+					{tags.map(([tag, count]) => {
+						// 文章越多字越大
+						const scale = 0.875 + (count / maxCount) * 0.625;
+						return (
+							<li>
+								<a
+									href={`/tags/${tag}/`}
+									class="inline-flex items-baseline gap-2 rounded-full bg-cream px-4 py-2 transition-colors hover:bg-clay hover:text-paper"
+									style={`font-size: ${scale}rem`}
+								>
+									<span class="text-ink">#{tag}</span>
+									<span class="text-xs text-stone">{count}</span>
+								</a>
+							</li>
+						);
+					})}
+				</ul>
+			)
+		}
+	</section>
+</Base>

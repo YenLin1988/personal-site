@@ -1,6 +1,9 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
+/* 深色模式策略：手動 toggle，在 <html> 加 .dark */
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
 	/* --- 字型 --- */
 	--font-sans:
@@ -10,20 +13,37 @@
 		var(--font-playfair), var(--font-noto-serif-tc), Georgia, 'Times New Roman',
 		serif;
 
-	/* --- 大地色系 Earth Palette --- */
-	--color-paper: #f9f6f0; /* 主背景 */
-	--color-cream: #f2ede3; /* 區塊底色 */
-	--color-sand: #e5dcc8; /* 邊框、tag */
-	--color-stone: #8f8478; /* 弱化文字 */
-	--color-mocha: #6b6054; /* 次要文字 */
-	--color-coffee: #4a3f35; /* 內文 */
-	--color-ink: #2b241d; /* 標題 */
-	--color-clay: #884c42; /* 強調主色 */
-	--color-leather: #57372a; /* 強調深色 */
+	/* --- 大地色系（淺色：日間） --- */
+	--color-paper: #f9f6f0;
+	--color-cream: #f2ede3;
+	--color-sand: #e5dcc8;
+	--color-stone: #8f8478;
+	--color-mocha: #6b6054;
+	--color-coffee: #4a3f35;
+	--color-ink: #2b241d;
+	--color-clay: #884c42;
+	--color-leather: #57372a;
 
-	/* 保留 accent alias 給既有 var() 引用 */
 	--color-accent: #884c42;
 	--color-accent-dark: #57372a;
+}
+
+/* --- 深色模式：earth tone 夜間版 --- */
+.dark {
+	--color-paper: #18140f; /* 深咖啡褐 */
+	--color-cream: #221c15; /* 略淺的區塊底 */
+	--color-sand: #3a322a; /* 邊框 */
+	--color-stone: #7a6f63; /* 弱化文字 */
+	--color-mocha: #a89c8c; /* 次要文字 */
+	--color-coffee: #d4c7b3; /* 內文 */
+	--color-ink: #f0e8db; /* 標題 */
+	--color-clay: #c88370; /* 強調主色（淺一點的陶土）*/
+	--color-leather: #d4a896; /* 強調 hover */
+
+	--color-accent: #c88370;
+	--color-accent-dark: #d4a896;
+
+	color-scheme: dark;
 }
 
 @layer base {
@@ -36,6 +56,9 @@
 		color: var(--color-coffee);
 		@apply antialiased;
 		font-feature-settings: 'liga', 'kern', 'onum';
+		transition:
+			background-color 0.3s ease,
+			color 0.3s ease;
 	}
 	h1,
 	h2,
@@ -53,7 +76,7 @@
 		color: var(--color-paper);
 	}
 
-	/* --- Typography 外掛配色覆寫 --- */
+	/* Typography 外掛配色覆寫 */
 	.prose {
 		--tw-prose-body: var(--color-coffee);
 		--tw-prose-headings: var(--color-ink);
@@ -72,4 +95,13 @@
 		--tw-prose-th-borders: var(--color-sand);
 		--tw-prose-td-borders: var(--color-sand);
 	}
+}
+
+/* View Transitions 預設淡入淡出（覆寫太快的 slide）*/
+@view-transition {
+	navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 0.25s;
 }
