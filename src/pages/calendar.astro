@@ -1,0 +1,116 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { SITE_TITLE } from '../consts';
+import { groupPostsByMonth } from '../lib/calendar';
+
+const posts = await getCollection('blog');
+const months = groupPostsByMonth(posts);
+const weekdays = ['日', '一', '二', '三', '四', '五', '六'] as const;
+
+const today = new Date();
+const todayKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+---
+
+<Base title={`行事曆 · ${SITE_TITLE}`} description="以行事曆瀏覽所有發布過的文章。">
+	<section class="mx-auto max-w-5xl px-4 py-16">
+		<header class="mb-12">
+			<p class="text-xs font-medium tracking-[0.3em] text-stone uppercase">Archive</p>
+			<h1 class="mt-2 text-4xl font-bold text-ink">行事曆</h1>
+			<p class="mt-2 text-mocha">
+				共 {posts.length} 篇文章，分布在 {months.length} 個月。滑鼠移到日期可看當天文章標題，點擊跳轉。
+			</p>
+		</header>
+
+		{
+			months.length === 0 ? (
+				<p class="text-mocha">還沒有任何文章。</p>
+			) : (
+				<div class="space-y-16">
+					{months.map(({ year, month, posts: mPosts, cells }) => (
+						<article>
+							<header class="mb-4 flex items-baseline justify-between border-b border-sand pb-3">
+								<h2 class="font-display text-2xl font-bold text-ink">
+									{year} <span class="text-mocha">年</span> {month}{' '}
+									<span class="text-mocha">月</span>
+								</h2>
+								<span class="text-sm text-stone">{mPosts.length} 篇</span>
+							</header>
+
+							<div class="grid grid-cols-7 gap-1 text-sm">
+								{weekdays.map((w) => (
+									<div class="py-2 text-center text-xs font-medium tracking-wider text-stone uppercase">
+										{w}
+									</div>
+								))}
+
+								{cells.map((cell) => {
+									if (cell.day === null) {
+										return <div class="aspect-square" />;
+									}
+									const isToday =
+										todayKey === `${year}-${month}-${cell.day}`;
+									if (cell.posts.length === 0) {
+										return (
+											<div
+												class:list={[
+													'flex aspect-square items-center justify-center text-stone/60',
+													isToday && 'ring-1 ring-clay/40 rounded-md',
+												]}
+											>
+												{cell.day}
+											</div>
+										);
+									}
+									const first = cell.posts[0];
+									return (
+										<div class="group relative">
+											<a
+												href={`/blog/${first.id}/`}
+												class:list={[
+													'flex aspect-square items-center justify-center rounded-md bg-cream font-medium text-ink transition-colors hover:bg-clay hover:text-paper focus:bg-clay focus:text-paper focus:outline-none',
+													isToday && 'ring-2 ring-clay',
+												]}
+												aria-label={`${year}-${month}-${cell.day}: ${cell.posts.map((p) => p.data.title).join(', ')}`}
+											>
+												<span class="relative">
+													{cell.day}
+													{cell.posts.length > 1 && (
+														<span class="absolute -top-1 -right-2 rounded-full bg-clay px-1 text-[10px] leading-none font-bold text-paper">
+															{cell.posts.length}
+														</span>
+													)}
+												</span>
+											</a>
+
+											<div
+												role="tooltip"
+												class="pointer-events-none invisible absolute top-full left-1/2 z-30 mt-2 w-64 -translate-x-1/2 rounded-lg border border-sand bg-paper p-3 shadow-lg opacity-0 transition-all duration-150 group-hover:visible group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:visible group-focus-within:pointer-events-auto group-focus-within:opacity-100"
+											>
+												<p class="font-display mb-2 text-xs font-medium tracking-wider text-stone uppercase">
+													{month}/{cell.day}
+												</p>
+												<ul class="space-y-1.5">
+													{cell.posts.map((p) => (
+														<li>
+															<a
+																href={`/blog/${p.id}/`}
+																class="block text-sm leading-snug text-ink hover:text-clay"
+															>
+																{p.data.title}
+															</a>
+														</li>
+													))}
+												</ul>
+											</div>
+										</div>
+									);
+								})}
+							</div>
+						</article>
+					))}
+				</div>
+			)
+		}
+	</section>
+</Base>
