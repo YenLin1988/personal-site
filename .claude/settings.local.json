@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(brew upgrade *)",
+      "Bash(npm --version)",
+      "Bash(git --version)",
+      "Bash(npm create *)",
+      "Bash(shopt -s dotglob)",
+      "Bash(mv stale-singularity/* .)",
+      "Bash(rmdir stale-singularity *)",
+      "Bash(setopt dotglob *)",
+      "Bash(npx astro *)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\n\" http://localhost:4321/)",
+      "Bash(curl -s -o /dev/null -w \"blog: %{http_code}\\\\n\" http://localhost:4321/blog)",
+      "Bash(curl -s -o /dev/null -w \"projects: %{http_code}\\\\n\" http://localhost:4321/projects)",
+      "Bash(curl -s -o /dev/null -w \"about: %{http_code}\\\\n\" http://localhost:4321/about)",
+      "WebSearch",
+      "WebFetch(domain:zh.wikipedia.org)",
+      "WebFetch(domain:superherodesign.co)",
+      "Bash(curl -s -o /dev/null -w \"home: %{http_code}\\\\nblog: %{http_code}\\\\n\" http://localhost:4321/ -w \"\")",
+      "Bash(curl -s -o /dev/null -w \"projects: %{http_code}\\\\nabout: %{http_code}\\\\n\" http://localhost:4321/projects)",
+      "Bash(gh auth *)",
+      "Bash(brew list *)",
+      "Bash(gh repo *)",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); print\\('Total repos:', len\\(data\\)\\); print\\('personal-site exists:', any\\(r['name']=='personal-site' for r in data\\)\\)\")",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}

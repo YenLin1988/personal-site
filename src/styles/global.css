@@ -1,0 +1,75 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@theme {
+	/* --- 字型 --- */
+	--font-sans:
+		var(--font-source-serif), var(--font-noto-serif-tc), Georgia, 'Times New Roman',
+		serif;
+	--font-display:
+		var(--font-playfair), var(--font-noto-serif-tc), Georgia, 'Times New Roman',
+		serif;
+
+	/* --- 大地色系 Earth Palette --- */
+	--color-paper: #f9f6f0; /* 主背景 */
+	--color-cream: #f2ede3; /* 區塊底色 */
+	--color-sand: #e5dcc8; /* 邊框、tag */
+	--color-stone: #8f8478; /* 弱化文字 */
+	--color-mocha: #6b6054; /* 次要文字 */
+	--color-coffee: #4a3f35; /* 內文 */
+	--color-ink: #2b241d; /* 標題 */
+	--color-clay: #884c42; /* 強調主色 */
+	--color-leather: #57372a; /* 強調深色 */
+
+	/* 保留 accent alias 給既有 var() 引用 */
+	--color-accent: #884c42;
+	--color-accent-dark: #57372a;
+}
+
+@layer base {
+	html {
+		font-family: var(--font-sans);
+		scroll-behavior: smooth;
+	}
+	body {
+		background-color: var(--color-paper);
+		color: var(--color-coffee);
+		@apply antialiased;
+		font-feature-settings: 'liga', 'kern', 'onum';
+	}
+	h1,
+	h2,
+	h3 {
+		font-family: var(--font-display);
+		color: var(--color-ink);
+		letter-spacing: -0.018em;
+		font-feature-settings: 'liga', 'kern';
+	}
+	h1 {
+		letter-spacing: -0.025em;
+	}
+	::selection {
+		background-color: var(--color-clay);
+		color: var(--color-paper);
+	}
+
+	/* --- Typography 外掛配色覆寫 --- */
+	.prose {
+		--tw-prose-body: var(--color-coffee);
+		--tw-prose-headings: var(--color-ink);
+		--tw-prose-lead: var(--color-mocha);
+		--tw-prose-links: var(--color-clay);
+		--tw-prose-bold: var(--color-ink);
+		--tw-prose-counters: var(--color-stone);
+		--tw-prose-bullets: var(--color-stone);
+		--tw-prose-hr: var(--color-sand);
+		--tw-prose-quotes: var(--color-ink);
+		--tw-prose-quote-borders: var(--color-clay);
+		--tw-prose-captions: var(--color-mocha);
+		--tw-prose-code: var(--color-ink);
+		--tw-prose-pre-code: var(--color-cream);
+		--tw-prose-pre-bg: var(--color-ink);
+		--tw-prose-th-borders: var(--color-sand);
+		--tw-prose-td-borders: var(--color-sand);
+	}
+}

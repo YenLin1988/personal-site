@@ -1,0 +1,47 @@
+---
+import { GISCUS } from '../consts';
+
+const configured = GISCUS.repoId !== '' && GISCUS.categoryId !== '';
+---
+
+<section class="mx-auto mt-16 max-w-3xl border-t border-sand px-4 pt-12">
+	<h2 class="font-display text-2xl font-bold text-ink">留言</h2>
+	<p class="mt-2 text-sm text-mocha">
+		歡迎留下你的想法。需要透過 GitHub 帳號登入，留言會公開顯示在這個頁面下方。
+	</p>
+
+	{
+		configured ? (
+			<div class="mt-8">
+				<script
+					is:inline
+					src="https://giscus.app/client.js"
+					data-repo={GISCUS.repo}
+					data-repo-id={GISCUS.repoId}
+					data-category={GISCUS.category}
+					data-category-id={GISCUS.categoryId}
+					data-mapping={GISCUS.mapping}
+					data-strict={GISCUS.strict}
+					data-reactions-enabled={GISCUS.reactionsEnabled}
+					data-emit-metadata={GISCUS.emitMetadata}
+					data-input-position={GISCUS.inputPosition}
+					data-theme={GISCUS.theme}
+					data-lang={GISCUS.lang}
+					data-loading={GISCUS.loading}
+					crossorigin="anonymous"
+					async
+				/>
+			</div>
+		) : (
+			<div class="mt-8 rounded-lg border border-dashed border-sand bg-cream/60 p-6 text-sm text-mocha">
+				<p class="font-medium text-ink">留言系統尚未啟用</p>
+				<p class="mt-2 leading-relaxed">
+					請依照 README 的「啟用留言系統」步驟，在 GitHub 設定好之後將
+					<code class="rounded bg-sand px-1.5 py-0.5 text-ink">repoId</code> 與
+					<code class="rounded bg-sand px-1.5 py-0.5 text-ink">categoryId</code> 填入
+					<code class="rounded bg-sand px-1.5 py-0.5 text-ink">src/consts.ts</code>。
+				</p>
+			</div>
+		)
+	}
+</section>
