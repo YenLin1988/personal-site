@@ -13,10 +13,10 @@ export const SOCIAL_LINKS = {
  * 在 https://giscus.app 取得 repoId 與 categoryId 後填入下方。
  */
 export const GISCUS = {
-	repo: 'your-handle/personal-site' as `${string}/${string}`,
-	repoId: '', // 例：R_kgDOxxxxxxx
+	repo: 'YenLin1988/personal-site' as `${string}/${string}`,
+	repoId: 'R_kgDOSjvkyQ',
 	category: 'Announcements',
-	categoryId: '', // 例：DIC_kwDOxxxxxx
+	categoryId: 'DIC_kwDOSjvkyc4C9hfm',
 	mapping: 'pathname', // 每篇文章用網址路徑對應一個 Discussion
 	strict: '1',
 	reactionsEnabled: '1',
