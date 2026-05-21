@@ -1,0 +1,119 @@
+---
+import { Image } from 'astro:assets';
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+export async function getStaticPaths() {
+	const books = await getCollection('books');
+	return books.map((book) => ({
+		params: { slug: book.id },
+		props: book,
+	}));
+}
+
+type Props = CollectionEntry<'books'>;
+
+const book = Astro.props;
+const { Content } = await render(book);
+
+const statusLabel: Record<CollectionEntry<'books'>['data']['status'], string> = {
+	reading: '正在讀',
+	read: '讀過',
+	wantToRead: '想讀',
+};
+---
+
+<Base title={`${book.data.title} · 書單`} description={book.data.description}>
+	<article class="mx-auto max-w-5xl px-4 py-16">
+		<nav class="mb-8">
+			<a href="/books/" class="text-sm text-clay hover:underline">← 回書單</a>
+		</nav>
+
+		<header class="grid gap-10 sm:grid-cols-[12rem_1fr]">
+			<div class="mx-auto w-48 sm:w-full">
+				{
+					book.data.cover ? (
+						<Image
+							src={book.data.cover}
+							alt={`${book.data.title} 封面`}
+							width={400}
+							height={600}
+							class="w-full rounded-lg shadow-md"
+						/>
+					) : (
+						<div class="flex aspect-[2/3] items-center justify-center rounded-lg bg-cream p-4 text-center text-mocha">
+							<span class="font-display text-lg">{book.data.title}</span>
+						</div>
+					)
+				}
+			</div>
+
+			<div>
+				<p class="text-xs font-medium tracking-[0.25em] text-stone uppercase">
+					{statusLabel[book.data.status]}
+				</p>
+				<h1 class="mt-2 text-3xl font-bold text-ink sm:text-4xl">{book.data.title}</h1>
+				<p class="mt-2 text-lg text-mocha">{book.data.author}</p>
+
+				{
+					book.data.rating && (
+						<p class="mt-4 text-lg text-clay" aria-label={`${book.data.rating} / 5 顆星`}>
+							{'★'.repeat(book.data.rating)}
+							<span class="text-stone">{'★'.repeat(5 - book.data.rating)}</span>
+						</p>
+					)
+				}
+
+				{
+					book.data.dateRead && (
+						<p class="mt-2 text-sm text-stone">
+							讀於 <FormattedDate date={book.data.dateRead} />
+						</p>
+					)
+				}
+
+				{
+					book.data.tags.length > 0 && (
+						<ul class="mt-4 flex flex-wrap gap-2">
+							{book.data.tags.map((tag) => (
+								<li class="rounded-full bg-sand px-3 py-1 text-xs text-mocha">
+									#{tag}
+								</li>
+							))}
+						</ul>
+					)
+				}
+
+				{
+					book.data.links.length > 0 && (
+						<div class="mt-6">
+							<p class="text-xs font-medium tracking-wider text-stone uppercase">
+								購書連結
+							</p>
+							<div class="mt-3 flex flex-wrap gap-2">
+								{book.data.links.map((link) => (
+									<a
+										href={link.url}
+										target="_blank"
+										rel="noopener sponsored"
+										class="rounded-lg border border-sand bg-cream px-4 py-2 text-sm text-ink transition-colors hover:bg-clay hover:text-paper hover:border-clay"
+									>
+										{link.label} →
+									</a>
+								))}
+							</div>
+							<p class="mt-3 text-xs text-stone">
+								* 部分連結為聯盟連結，點擊購買我會收到些許分潤，價格不變。
+							</p>
+						</div>
+					)
+				}
+			</div>
+		</header>
+
+		<div class="prose prose-lg mx-auto mt-16 max-w-3xl">
+			<Content />
+		</div>
+	</article>
+</Base>

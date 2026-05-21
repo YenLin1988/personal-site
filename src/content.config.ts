@@ -30,4 +30,28 @@ const projects = defineCollection({
 		}),
 });
 
-export const collections = { blog, projects };
+const books = defineCollection({
+	loader: glob({ base: './src/content/books', pattern: '**/*.{md,mdx}' }),
+	schema: ({ image }) =>
+		z.object({
+			title: z.string(),
+			author: z.string(),
+			description: z.string(),
+			cover: z.optional(image()),
+			status: z.enum(['reading', 'read', 'wantToRead']).default('read'),
+			rating: z.number().min(1).max(5).optional(),
+			dateRead: z.coerce.date().optional(),
+			tags: z.array(z.string()).default([]),
+			links: z
+				.array(
+					z.object({
+						label: z.string(),
+						url: z.url(),
+					}),
+				)
+				.default([]),
+			featured: z.boolean().default(false),
+		}),
+});
+
+export const collections = { blog, projects, books };
