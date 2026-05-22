@@ -1,6 +1,8 @@
 // 全站共用常數。
-export const SITE_TITLE = '我的個人網站';
-export const SITE_DESCRIPTION = '紀錄我的想法、作品與正在進行的專案。';
+export const SITE_TITLE = '阿基里斯的烏龜';
+export const SITE_TAGLINE = '關於理型的追尋';
+export const SITE_DESCRIPTION =
+	'阿基里斯永遠追不上烏龜，但每一步都讓他更靠近。Yen 的思考筆記與閱讀紀錄 —— 一場朝向理型的長途練習。';
 export const SITE_AUTHOR = 'Yen';
 export const SOCIAL_LINKS = {
 	github: 'https://github.com/YenLin1988',

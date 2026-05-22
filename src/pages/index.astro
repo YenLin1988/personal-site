@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { SITE_DESCRIPTION, SITE_TAGLINE, SITE_TITLE } from '../consts';
 
 const recentPosts = (await getCollection('blog'))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -15,6 +15,35 @@ const featuredProjects = (await getCollection('projects'))
 ---
 
 <Base title={SITE_TITLE} description={SITE_DESCRIPTION}>
+	<!-- Hero -->
+	<section class="mx-auto max-w-3xl px-4 py-24 sm:py-32">
+		<h1 class="font-display text-5xl leading-[1.1] font-bold text-ink sm:text-6xl md:text-7xl">
+			{SITE_TITLE}
+		</h1>
+		<p class="font-display mt-4 text-2xl text-mocha italic sm:text-3xl">
+			{SITE_TAGLINE}
+		</p>
+		<p class="mt-10 max-w-xl text-lg leading-relaxed text-coffee">
+			阿基里斯永遠追不上烏龜，但每一步都讓他更靠近。<br />
+			這裡是 Yen 的思考筆記與閱讀紀錄 ——
+			一場朝向理型的長途練習。
+		</p>
+		<div class="mt-10 flex flex-wrap gap-3">
+			<a
+				href="/blog"
+				class="rounded-lg bg-clay px-5 py-2.5 text-sm font-medium text-paper transition-opacity hover:opacity-90"
+			>
+				逛部落格
+			</a>
+			<a
+				href="/books"
+				class="rounded-lg border border-sand px-5 py-2.5 text-sm font-medium text-mocha transition-colors hover:bg-cream"
+			>
+				看書單
+			</a>
+		</div>
+	</section>
+
 	<!-- 創造理念 / Manifesto -->
 	<section class="border-y border-sand bg-cream/60 py-20 sm:py-24">
 		<div class="mx-auto max-w-3xl px-4">
