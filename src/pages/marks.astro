@@ -1,0 +1,159 @@
+---
+import Base from '../layouts/Base.astro';
+
+interface MarkOption {
+	id: string;
+	letter: string;
+	name: string;
+	subtitle: string;
+	rationale: string;
+	src: string;
+}
+
+const marks: MarkOption[] = [
+	{
+		id: '0-alpha',
+		letter: '0',
+		name: 'α · alpha（目前）',
+		subtitle: '希臘字母 alpha · 阿基里斯的首字',
+		rationale:
+			'最直接的識別 —— Achilles 的 A、Alpha 也是「開始」的字母。優點是簡潔有書卷氣，缺點是過於通用，沒有點到網站的核心隱喻（追逐與理型）。',
+		src: '/marks/0-alpha.svg',
+	},
+	{
+		id: 'a-hex',
+		letter: 'A',
+		name: '六角龜甲',
+		subtitle: 'Geometric tortoise shell',
+		rationale:
+			'把烏龜抽象成幾何 —— 柏拉圖最愛的形式。雙層六邊形像龜甲的紋路，中心一點代表「核心理型」。優點：圖形對稱、易辨識、文藝感，pixel 小到 16px 仍可讀。',
+		src: '/marks/a-hex.svg',
+	},
+	{
+		id: 'b-chase',
+		letter: 'B',
+		name: '追逐',
+		subtitle: 'The chase, mid-paradox',
+		rationale:
+			'把芝諾悖論畫出來：箭頭（阿基里斯）追向前方那個點（烏龜），刻意停在距離一點點之處 —— 永遠不抵達。優點：故事性強。缺點：在 16px favicon 下細節可能消失。',
+		src: '/marks/b-chase.svg',
+	},
+	{
+		id: 'c-forms',
+		letter: 'C',
+		name: '理型同心',
+		subtitle: 'Concentric forms · 漸近 asymptote',
+		rationale:
+			'四層同心圓由外漸進，透明度漸增 —— 越靠近中心（理型）越清晰。視覺上最詩意，呼應「每一步的趨近就是答案」。優點：抽象、安靜、有層次。',
+		src: '/marks/c-forms.svg',
+	},
+	{
+		id: 'd-eidos',
+		letter: 'D',
+		name: 'ε · εἶδος',
+		subtitle: 'Eidos · 柏拉圖原文裡的「理型」',
+		rationale:
+			'用希臘原文 εἶδος 的首字母 ε，比 α 更直接呼應網站理念。義大利體拉長的曲線特別美。優點：哲學感最強。缺點：ε 在西方使用者眼中相對熟悉，但對中文讀者可能略陌生。',
+		src: '/marks/d-eidos.svg',
+	},
+];
+
+const sizes = [
+	{ px: 16, label: '16px Favicon' },
+	{ px: 32, label: '32px' },
+	{ px: 80, label: '80px' },
+	{ px: 160, label: '160px' },
+];
+---
+
+<Base
+	title="個人 mark 候選"
+	description="比較不同視覺方向，挑一個當作網站的 personal mark。"
+>
+	<section class="mx-auto max-w-4xl px-4 py-16">
+		<header class="mb-12">
+			<p class="text-xs font-medium tracking-[0.3em] text-stone uppercase">Design Picker</p>
+			<h1 class="mt-2 text-4xl font-bold text-ink">個人 mark 候選</h1>
+			<p class="mt-3 text-mocha">
+				選一個。我會把它套到 favicon、AuthorCard 頭像、之後可能也用在 OG 圖。
+			</p>
+		</header>
+
+		<ul class="space-y-12">
+			{
+				marks.map((mark) => (
+					<li class="rounded-2xl border border-sand bg-cream/40 p-6 sm:p-8">
+						<div class="flex items-baseline gap-3">
+							<span class="font-display text-3xl font-bold text-clay italic">
+								{mark.letter}
+							</span>
+							<div>
+								<h2 class="font-display text-2xl font-bold text-ink">{mark.name}</h2>
+								<p class="text-sm text-stone italic">{mark.subtitle}</p>
+							</div>
+						</div>
+
+						<p class="mt-4 max-w-2xl leading-relaxed text-mocha">{mark.rationale}</p>
+
+						<!-- Light bg sample -->
+						<div class="mt-6 rounded-lg bg-paper p-6">
+							<p class="font-display mb-4 text-xs font-medium tracking-widest text-stone uppercase">
+								淺底 paper
+							</p>
+							<div class="flex items-end gap-6">
+								{sizes.map((s) => (
+									<div class="flex flex-col items-center gap-2">
+										<img
+											src={mark.src}
+											alt=""
+											width={s.px}
+											height={s.px}
+											style={`width:${s.px}px;height:${s.px}px`}
+										/>
+										<span class="text-[10px] text-stone">{s.label}</span>
+									</div>
+								))}
+							</div>
+						</div>
+
+						<!-- Dark bg sample -->
+						<div class="mt-3 rounded-lg p-6" style="background:#18140f">
+							<p
+								class="font-display mb-4 text-xs font-medium tracking-widest uppercase"
+								style="color:#7a6f63"
+							>
+								深底 ink
+							</p>
+							<div class="flex items-end gap-6">
+								{sizes.map((s) => (
+									<div class="flex flex-col items-center gap-2">
+										<img
+											src={mark.src}
+											alt=""
+											width={s.px}
+											height={s.px}
+											style={`width:${s.px}px;height:${s.px}px`}
+										/>
+										<span class="text-[10px]" style="color:#7a6f63">
+											{s.label}
+										</span>
+									</div>
+								))}
+							</div>
+						</div>
+					</li>
+				))
+			}
+		</ul>
+
+		<aside class="mt-12 rounded-lg border border-dashed border-sand p-6 text-sm text-mocha">
+			<p class="font-medium text-ink">如何選</p>
+			<ol class="mt-3 list-decimal space-y-1 pl-5">
+				<li>最右邊的大圖看細節美感</li>
+				<li>最左邊的 16px 才是真實 favicon 大小，要在那個尺寸還能辨識才算好</li>
+				<li>看深底版本：確保深色模式下對比夠</li>
+				<li>選好告訴我代號（A / B / C / D / 0），我會套用並把這個比較頁刪掉</li>
+			</ol>
+		</aside>
+	</section>
+</Base>
