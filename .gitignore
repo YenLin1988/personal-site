@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Codex / tooling local state (含 secret_key、sqlite db、cache)
+config/
