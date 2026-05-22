@@ -1,0 +1,99 @@
+---
+import { SITE_AUTHOR, SITE_TITLE, SOCIAL_LINKS } from '../consts';
+
+interface Props {
+	type: 'WebSite' | 'Article' | 'Book';
+	title: string;
+	description: string;
+	url: URL | string;
+	image?: URL | string;
+	datePublished?: Date;
+	dateModified?: Date;
+	tags?: string[];
+	// Book-specific
+	author?: string; // 書本作者；其他類型則用站作者
+	bookFormat?: string;
+}
+
+const {
+	type,
+	title,
+	description,
+	url,
+	image,
+	datePublished,
+	dateModified,
+	tags,
+	author,
+	bookFormat,
+} = Astro.props;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+
+type JsonLd = {
+	'@context': 'https://schema.org';
+	'@type': string;
+} & Record<string, unknown>;
+
+let data: JsonLd;
+
+if (type === 'WebSite') {
+	data = {
+		'@context': 'https://schema.org',
+		'@type': 'WebSite',
+		name: SITE_TITLE,
+		url: siteUrl || String(url),
+		description,
+		author: {
+			'@type': 'Person',
+			name: SITE_AUTHOR,
+			url: SOCIAL_LINKS.github,
+		},
+		inLanguage: 'zh-Hant',
+	};
+} else if (type === 'Article') {
+	data = {
+		'@context': 'https://schema.org',
+		'@type': 'BlogPosting',
+		headline: title,
+		description,
+		url: String(url),
+		image: image ? String(image) : undefined,
+		datePublished: datePublished?.toISOString(),
+		dateModified: (dateModified ?? datePublished)?.toISOString(),
+		keywords: tags?.join(', '),
+		author: {
+			'@type': 'Person',
+			name: SITE_AUTHOR,
+			url: SOCIAL_LINKS.github,
+		},
+		publisher: {
+			'@type': 'Person',
+			name: SITE_AUTHOR,
+		},
+		mainEntityOfPage: {
+			'@type': 'WebPage',
+			'@id': String(url),
+		},
+		inLanguage: 'zh-Hant',
+	};
+} else {
+	// Book
+	data = {
+		'@context': 'https://schema.org',
+		'@type': 'Book',
+		name: title,
+		description,
+		url: String(url),
+		image: image ? String(image) : undefined,
+		author: author ? { '@type': 'Person', name: author } : undefined,
+		bookFormat,
+		inLanguage: 'zh-Hant',
+	};
+}
+
+// Strip undefined values
+const json = JSON.stringify(data, (_k, v) => (v === undefined ? undefined : v));
+---
+
+<script type="application/ld+json" set:html={json} is:inline />

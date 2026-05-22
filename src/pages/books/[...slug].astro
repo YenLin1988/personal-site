@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
+import StructuredData from '../../components/StructuredData.astro';
 
 export async function getStaticPaths() {
 	const books = await getCollection('books');
@@ -17,6 +18,9 @@ type Props = CollectionEntry<'books'>;
 const book = Astro.props;
 const { Content } = await render(book);
 
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const coverURL = book.data.cover ? new URL(book.data.cover.src, Astro.url) : undefined;
+
 const statusLabel: Record<CollectionEntry<'books'>['data']['status'], string> = {
 	reading: '正在讀',
 	read: '讀過',
@@ -25,6 +29,14 @@ const statusLabel: Record<CollectionEntry<'books'>['data']['status'], string> = 
 ---
 
 <Base title={`${book.data.title} · 書單`} description={book.data.description}>
+	<StructuredData
+		type="Book"
+		title={book.data.title}
+		description={book.data.description}
+		url={canonicalURL}
+		image={coverURL}
+		author={book.data.author}
+	/>
 	<article class="mx-auto max-w-5xl px-4 py-16">
 		<nav class="mb-8">
 			<a href="/books/" class="text-sm text-clay hover:underline">← 回書單</a>

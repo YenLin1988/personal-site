@@ -36,7 +36,11 @@
       "Bash(curl -s http://localhost:4321/blog/markdown-style-guide)",
       "Bash(curl -s -o /dev/null -w \"calendar: %{http_code}\\\\n\" http://localhost:4321/calendar)",
       "Bash(git commit *)",
-      "Bash(curl -s https://personal-site.foreverfree90504.workers.dev/blog/first-post/)"
+      "Bash(curl -s https://personal-site.foreverfree90504.workers.dev/blog/first-post/)",
+      "Bash(git rm *)",
+      "Bash(brew install *)",
+      "Bash(git filter-repo *)",
+      "Bash(git remote *)"
     ]
   }
 }

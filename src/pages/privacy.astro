@@ -1,0 +1,129 @@
+---
+import Base from '../layouts/Base.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_AUTHOR, SITE_TITLE, SOCIAL_LINKS } from '../consts';
+
+const lastUpdated = new Date('2026-05-23');
+---
+
+<Base
+	title={`隱私權政策 · ${SITE_TITLE}`}
+	description="本網站如何處理你的資料、使用哪些第三方服務、以及你的權利。"
+>
+	<article class="mx-auto max-w-3xl px-4 py-16">
+		<header class="mb-10">
+			<p class="text-xs font-medium tracking-[0.3em] text-stone uppercase">Privacy Policy</p>
+			<h1 class="mt-2 text-4xl font-bold text-ink">隱私權政策</h1>
+			<p class="mt-2 text-sm text-stone">
+				最後更新：<FormattedDate date={lastUpdated} />
+			</p>
+		</header>
+
+		<div class="prose prose-lg max-w-none">
+			<p>
+				感謝你閱讀「{SITE_TITLE}」。這份政策說明我會收集什麼資料、為什麼收集、以及你的權利。
+				我盡量讓內容白話，不用法律黑話。
+			</p>
+
+			<h2>一、我會收集哪些資料</h2>
+
+			<h3>1. 匿名訪客分析（Cloudflare Web Analytics）</h3>
+			<p>
+				我用 <a
+					href="https://www.cloudflare.com/web-analytics/"
+					target="_blank"
+					rel="noopener"
+				>Cloudflare Web Analytics</a> 統計訪客數量與哪些頁面比較受歡迎。它的特色是：
+			</p>
+			<ul>
+				<li><strong>不使用 Cookie</strong>，所以也不需要 GDPR 同意條款。</li>
+				<li>不會追蹤你跨網站的行為。</li>
+				<li>只收集匯總後的數字（國家、瀏覽器、referrer），不收集個人身分資訊。</li>
+				<li>資料保留期由 Cloudflare 決定（目前是 6 個月）。</li>
+			</ul>
+
+			<h3>2. 留言系統（Giscus / GitHub Discussions）</h3>
+			<p>
+				文章底部的留言區由 <a href="https://giscus.app" target="_blank" rel="noopener">Giscus</a> 提供，
+				留言會儲存在我的 <a
+					href="https://github.com/YenLin1988/personal-site/discussions"
+					target="_blank"
+					rel="noopener"
+				>GitHub Discussions</a> 公開頁面。
+			</p>
+			<ul>
+				<li>留言需要 GitHub 帳號登入，所以你的 GitHub 公開 username、頭像、留言內容會公開顯示。</li>
+				<li>留言一經發布即公開，可被搜尋引擎索引。</li>
+				<li>你可以隨時在 GitHub 上編輯或刪除自己的留言。</li>
+				<li>如果想徹底刪除：請 email 給我，我會手動清掉並通知 GitHub。</li>
+			</ul>
+
+			<h3>3. 電子報訂閱（若你選擇訂閱）</h3>
+			<p>
+				如果你訂閱電子報，你的 email 會儲存在 <a
+					href="https://buttondown.com"
+					target="_blank"
+					rel="noopener"
+				>Buttondown</a>，僅用於寄送新文章通知。
+			</p>
+			<ul>
+				<li>不會分享或賣給任何第三方。</li>
+				<li>每封信都有一鍵取消訂閱連結。</li>
+				<li>你可以隨時來信要求刪除。</li>
+			</ul>
+
+			<h3>4. 聯盟連結（書單頁面）</h3>
+			<p>
+				書單頁面的購書連結可能包含聯盟連結（例如博客來 AP）。當你透過這些連結購書，我可能會收到 4-10% 的分潤，
+				<strong>你的購買價格不會因此改變</strong>。網站不會追蹤你在第三方網站上的行為。
+			</p>
+
+			<h2>二、第三方服務</h2>
+			<p>本網站運用的第三方服務一覽：</p>
+			<ul>
+				<li><a href="https://www.cloudflare.com" target="_blank" rel="noopener">Cloudflare</a>（網站託管、CDN、分析）</li>
+				<li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a>（程式碼、留言儲存）</li>
+				<li><a href="https://fonts.google.com" target="_blank" rel="noopener">Google Fonts</a>（字型載入）</li>
+			</ul>
+			<p>這些服務各自有自己的隱私政策，請點連結參考。</p>
+
+			<h2>三、你的權利</h2>
+			<p>依照台灣個人資料保護法與一般通用做法，你有權：</p>
+			<ul>
+				<li>查詢我擁有哪些你的資料</li>
+				<li>要求更正或刪除</li>
+				<li>取消訂閱電子報</li>
+				<li>刪除你的留言</li>
+			</ul>
+			<p>
+				行使任何權利，請來信
+				<a href={SOCIAL_LINKS.email}>foreverfree90504@gmail.com</a>，
+				我會盡快回覆（通常 7 天內）。
+			</p>
+
+			<h2>四、Cookie 政策</h2>
+			<p>
+				本網站<strong>不主動設定任何 Cookie</strong>。唯一會用到的本地儲存是：
+			</p>
+			<ul>
+				<li><code>localStorage.theme</code>：記住你選擇的深色／淺色模式偏好。只存在你的瀏覽器，從不傳送到伺服器。</li>
+			</ul>
+
+			<h2>五、政策變更</h2>
+			<p>
+				政策若有修改，我會更新本頁頂端的「最後更新」日期。
+				重大變更（例如新增第三方服務）會在首頁或部落格公告。
+			</p>
+
+			<hr />
+
+			<p class="text-sm text-stone">
+				如果你看到這裡 —— 謝謝。這份政策是我盡可能誠實寫的版本，不是法律文件範本。
+				有任何問題、不清楚的地方、或建議，歡迎來信。
+			</p>
+			<p class="text-sm text-stone">
+				—— {SITE_AUTHOR}
+			</p>
+		</div>
+	</article>
+</Base>

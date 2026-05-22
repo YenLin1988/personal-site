@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<Base title={`頁面不存在 · ${SITE_TITLE}`} description="這個網址找不到對應的內容。">
+	<section class="mx-auto flex min-h-[60vh] max-w-3xl flex-col items-center justify-center px-4 py-24 text-center">
+		<p class="font-display text-xs font-medium tracking-[0.4em] text-stone uppercase">
+			404 · Not Found
+		</p>
+
+		<h1 class="font-display mt-6 text-6xl leading-none font-bold text-ink sm:text-7xl">
+			找不到頁面
+		</h1>
+
+		<p class="font-display mt-6 max-w-md text-lg leading-relaxed text-mocha italic">
+			阿基里斯一個轉身，烏龜就消失在路徑上了。<br />
+			這個網址不存在，或者已經被搬走了。
+		</p>
+
+		<div class="mt-10 flex flex-wrap justify-center gap-3">
+			<a
+				href="/"
+				class="rounded-lg bg-clay px-5 py-2.5 text-sm font-medium text-paper transition-opacity hover:opacity-90"
+			>
+				回首頁
+			</a>
+			<a
+				href="/blog"
+				class="rounded-lg border border-sand px-5 py-2.5 text-sm font-medium text-mocha transition-colors hover:bg-cream"
+			>
+				逛部落格
+			</a>
+			<a
+				href="/calendar"
+				class="rounded-lg border border-sand px-5 py-2.5 text-sm font-medium text-mocha transition-colors hover:bg-cream"
+			>
+				行事曆
+			</a>
+		</div>
+	</section>
+</Base>
