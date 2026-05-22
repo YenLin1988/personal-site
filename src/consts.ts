@@ -23,7 +23,7 @@ export const NEWSLETTER = {
  * 2. Add a site，取得 beacon token
  * 3. 填到下方就會開始記錄
  */
-export const CF_ANALYTICS_TOKEN = ''; // 例：'abc123...'
+export const CF_ANALYTICS_TOKEN = '1d3901bed07f4a76ae10f3efa1995f55';
 
 /**
  * Giscus 留言系統設定。

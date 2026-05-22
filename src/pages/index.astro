@@ -15,34 +15,6 @@ const featuredProjects = (await getCollection('projects'))
 ---
 
 <Base title={SITE_TITLE} description={SITE_DESCRIPTION}>
-	<!-- Hero -->
-	<section class="mx-auto max-w-3xl px-4 py-20 sm:py-28">
-		<p class="text-sm font-medium uppercase tracking-wider text-[color:var(--color-accent)]">
-			Hello 👋
-		</p>
-		<h1 class="mt-3 text-4xl font-bold text-ink sm:text-5xl">
-			我是 <span class="text-[color:var(--color-accent)]">Your Name</span>
-		</h1>
-		<p class="mt-6 text-lg leading-relaxed text-mocha">
-			一句話介紹自己：例如「我是一名軟體工程師，喜歡用程式碼把抽象的想法變成可以使用的東西。」
-			這個網站用來分享我的學習筆記、做過的小專案，以及一些日常想法。
-		</p>
-		<div class="mt-8 flex flex-wrap gap-3">
-			<a
-				href="/blog"
-				class="rounded-lg bg-[color:var(--color-accent)] px-5 py-2.5 text-sm font-medium text-white hover:opacity-90"
-			>
-				逛部落格
-			</a>
-			<a
-				href="/projects"
-				class="rounded-lg border border-sand px-5 py-2.5 text-sm font-medium text-mocha hover:bg-cream"
-			>
-				看看作品
-			</a>
-		</div>
-	</section>
-
 	<!-- 創造理念 / Manifesto -->
 	<section class="border-y border-sand bg-cream/60 py-20 sm:py-24">
 		<div class="mx-auto max-w-3xl px-4">
