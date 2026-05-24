@@ -1,14 +1,14 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection, type CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import { SITE_TITLE } from '../../consts';
+import { getAllPosts, type AnyPost } from '../../lib/all-posts';
 import { getReadingTime } from '../../lib/reading-time';
 
 export async function getStaticPaths() {
-	const allPosts = await getCollection('blog');
-	const tagMap = new Map<string, CollectionEntry<'blog'>[]>();
+	const allPosts = await getAllPosts();
+	const tagMap = new Map<string, AnyPost[]>();
 	for (const post of allPosts) {
 		for (const tag of post.data.tags ?? []) {
 			if (!tagMap.has(tag)) tagMap.set(tag, []);
@@ -23,7 +23,7 @@ export async function getStaticPaths() {
 
 type Props = {
 	tag: string;
-	posts: CollectionEntry<'blog'>[];
+	posts: AnyPost[];
 };
 
 const { tag, posts } = Astro.props;

@@ -40,7 +40,21 @@
       "Bash(git rm *)",
       "Bash(brew install *)",
       "Bash(git filter-repo *)",
-      "Bash(git remote *)"
+      "Bash(git remote *)",
+      "Bash(curl -sIL -o /dev/null -w 'HTTP %{http_code}  redirected to: %{url_effective}\\\\n' https://personal-site.foreverfree90504.workers.dev/marks)",
+      "Bash(curl -sIL -o /dev/null -w 'HTTP %{http_code}\\\\n' https://personal-site.foreverfree90504.workers.dev/marks/)",
+      "Bash(curl -s https://personal-site.foreverfree90504.workers.dev/marks/)",
+      "Bash(curl -s https://personal-site.foreverfree90504.workers.dev/sitemap-0.xml)",
+      "Bash(curl -sI https://personal-site.foreverfree90504.workers.dev/marks/)",
+      "Bash(curl -sI https://personal-site.foreverfree90504.workers.dev/marks/0-alpha.svg)",
+      "mcp__claude_ai_Notion__notion-get-teams",
+      "mcp__claude_ai_Notion__notion-search",
+      "mcp__claude_ai_Notion__notion-fetch",
+      "mcp__claude_ai_Notion__notion-create-database",
+      "mcp__claude_ai_Notion__notion-create-pages",
+      "Bash(git check-ignore *)",
+      "Bash(python3 -c \"import json,sys; p=json.load\\(sys.stdin\\); print\\('version:', p['version']\\); print\\('main:', p.get\\('main'\\)\\); print\\('exports:', list\\(p.get\\('exports', {}\\).keys\\(\\)\\)\\)\")",
+      "mcp__claude_ai_Notion__notion-update-page"
     ]
   }
 }

@@ -2,17 +2,26 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
+const blogSchema = ({ image }: { image: () => z.ZodType }) =>
+	z.object({
+		title: z.string(),
+		description: z.string(),
+		pubDate: z.coerce.date(),
+		updatedDate: z.coerce.date().optional(),
+		heroImage: z.optional(image()),
+		tags: z.array(z.string()).default([]),
+	});
+
 const blog = defineCollection({
 	loader: glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' }),
-	schema: ({ image }) =>
-		z.object({
-			title: z.string(),
-			description: z.string(),
-			pubDate: z.coerce.date(),
-			updatedDate: z.coerce.date().optional(),
-			heroImage: z.optional(image()),
-			tags: z.array(z.string()).default([]),
-		}),
+	schema: blogSchema,
+});
+
+// 從 Notion 同步的文章（由 scripts/sync-notion.mjs 寫到該目錄）
+// 內容真實來源是 Notion database，這邊的 .md 是 build 前自動產生
+const notionBlog = defineCollection({
+	loader: glob({ base: './src/content/notion-blog', pattern: '**/*.{md,mdx}' }),
+	schema: blogSchema,
 });
 
 const projects = defineCollection({
@@ -54,4 +63,4 @@ const books = defineCollection({
 		}),
 });
 
-export const collections = { blog, projects, books };
+export const collections = { blog, notionBlog, projects, books };

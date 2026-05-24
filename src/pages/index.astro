@@ -3,10 +3,9 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_DESCRIPTION, SITE_TAGLINE, SITE_TITLE } from '../consts';
+import { getAllPosts } from '../lib/all-posts';
 
-const recentPosts = (await getCollection('blog'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 3);
+const recentPosts = (await getAllPosts()).slice(0, 3);
 
 const featuredProjects = (await getCollection('projects'))
 	.filter((p) => p.data.featured)

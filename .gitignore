@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # Codex / tooling local state (含 secret_key、sqlite db、cache)
 config/
+
+# Notion synced content (build 時自動產生，內容真實來源在 Notion database)
+src/content/notion-blog/

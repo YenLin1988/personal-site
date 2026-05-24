@@ -6,6 +6,9 @@
     "node": ">=22.12.0"
   },
   "scripts": {
+    "sync:notion": "node --env-file-if-exists=.env scripts/sync-notion.mjs",
+    "predev": "npm run sync:notion",
+    "prebuild": "npm run sync:notion",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
@@ -15,8 +18,10 @@
     "@astrojs/mdx": "^5.0.6",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
+    "@notionhq/client": "^5.22.0",
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.3.6",
+    "notion-to-md": "^3.1.9",
     "sharp": "^0.34.3",
     "tailwindcss": "^4.3.0"
   },

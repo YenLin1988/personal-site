@@ -1,14 +1,15 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import { SITE_TITLE } from '../../consts';
+import { getAllPosts } from '../../lib/all-posts';
 import { getReadingTime } from '../../lib/reading-time';
 
-const posts = (await getCollection('blog'))
-	.map((post) => ({ ...post, readingMinutes: getReadingTime(post.body ?? '') }))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = (await getAllPosts()).map((post) => ({
+	...post,
+	readingMinutes: getReadingTime(post.body ?? ''),
+}));
 ---
 
 <Base title={`部落格 · ${SITE_TITLE}`} description="所有部落格文章列表。">

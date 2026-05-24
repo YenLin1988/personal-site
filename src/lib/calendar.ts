@@ -1,14 +1,14 @@
-import type { CollectionEntry } from 'astro:content';
+import type { AnyPost } from './all-posts';
 
 export interface DayCell {
 	day: number | null;
-	posts: CollectionEntry<'blog'>[];
+	posts: AnyPost[];
 }
 
 export interface MonthGrid {
 	year: number;
 	month: number; // 1-12
-	posts: CollectionEntry<'blog'>[];
+	posts: AnyPost[];
 	cells: DayCell[];
 }
 
@@ -20,8 +20,8 @@ function ymKey(date: Date): string {
 }
 
 /** Group posts into reverse-chronological monthly buckets and build calendar grids. */
-export function groupPostsByMonth(posts: CollectionEntry<'blog'>[]): MonthGrid[] {
-	const byMonth = new Map<string, CollectionEntry<'blog'>[]>();
+export function groupPostsByMonth(posts: AnyPost[]): MonthGrid[] {
+	const byMonth = new Map<string, AnyPost[]>();
 	for (const post of posts) {
 		const key = ymKey(post.data.pubDate);
 		if (!byMonth.has(key)) byMonth.set(key, []);
@@ -36,7 +36,7 @@ export function groupPostsByMonth(posts: CollectionEntry<'blog'>[]): MonthGrid[]
 			(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
 		);
 
-		const postsByDay = new Map<number, CollectionEntry<'blog'>[]>();
+		const postsByDay = new Map<number, AnyPost[]>();
 		for (const post of monthPosts) {
 			const d = post.data.pubDate.getDate();
 			if (!postsByDay.has(d)) postsByDay.set(d, []);
