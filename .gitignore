@@ -28,3 +28,9 @@ config/
 
 # Notion synced content (build 時自動產生，內容真實來源在 Notion database)
 src/content/notion-blog/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
